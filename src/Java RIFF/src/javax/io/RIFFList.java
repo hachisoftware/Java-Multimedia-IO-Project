@@ -21,13 +21,14 @@ public class RIFFList extends RIFFObject {
 			String sckId = RIFFUtils.convertDWORD(ckData, pos);
 			int sckSize = RIFFUtils.convertIntLE(ckData, pos + 4);
 			pos += 8;
-			
-			System.out.println(sckSize);
+
 			byte[] sckData = new byte[sckSize];
 			System.arraycopy(ckData, pos, sckData, 0, sckSize);
 			pos += sckSize;
 			
-			if(sckId.equals("LIST"))
+			if(sckId.equals("JUNK"))
+				continue;
+			else if(sckId.equals("LIST"))
 				this.subchunks.add(new RIFFList(sckData));
 			else
 				this.subchunks.add(new RIFFChunk(sckId, sckData));

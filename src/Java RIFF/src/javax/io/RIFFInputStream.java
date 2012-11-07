@@ -52,7 +52,11 @@ public class RIFFInputStream extends InputStream {
 		else
 			this.stRead += ckSize;
 		
-		
+		if(ckId.equals("JUNK"))
+			return next();
+		else if(ckId.equals("LIST"))
+			return new RIFFList(ckData);
+		else
 			return new RIFFChunk(ckId, ckData);
 	}
 	
